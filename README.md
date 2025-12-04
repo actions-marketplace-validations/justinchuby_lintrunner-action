@@ -9,20 +9,25 @@ This action sets up and runs `lintrunner`(https://github.com/suo/lintrunner) to 
 See [action.yml](./action.yml)
 
 ```yaml
-steps:
-  - uses: actions/checkout@v3
-  - uses: justinchuby/lintrunner-action@main
-    with:
-      # Whether the action should upload a SARIF report of the
-      # lint results which will show up as a GitHub code scanning report
-      publish_code_scanning: true
-      # Disable verbose logging from lintrunner and only show lint results
-      quiet: true
+jobs:
+  lint:
+    permissions:
+      security-events: write
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: justinchuby/lintrunner-action@main
+        with:
+          # Whether the action should upload a SARIF report of the
+          # lint results which will show up as a GitHub code scanning report
+          publish_code_scanning: true
+          # Disable verbose logging from lintrunner and only show lint results
+          quiet: true
 ```
 
 ## Set up lintrunner
 
-To set up `lintrunner`, create a `.lintrunner.toml` cinfiguration file in the root of the repository. An example linter configuration looks like:
+To set up `lintrunner`, create a `.lintrunner.toml` configuration file in the root of the repository. An example linter configuration looks like:
 
 ```toml
 merge_base_with = 'main'
@@ -60,6 +65,6 @@ Visit https://github.com/suo/lintrunner for a complete setup guide and https://g
 
 ### Example configs
 
-- https://github.com/microsoft/onnxscript/blob/main/.lintrunner.toml
-- https://github.com/pytorch/pytorch/blob/main/.lintrunner.toml
 - https://github.com/justinchuby/lintrunner-adapters/blob/main/.lintrunner.toml
+- https://github.com/pytorch/pytorch/blob/main/.lintrunner.toml
+- https://github.com/microsoft/onnxscript/blob/main/.lintrunner.toml
